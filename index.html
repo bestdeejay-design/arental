@@ -316,13 +316,12 @@
       </div>
       <aside class="card">
         <h3 style="margin:0 0 8px">Бесплатный экспресс‑аудит</h3>
-        <p class="kicker">Заполните краткую форму — пришлём план улучшений и прогноз по лидам.</p>
-        <form onsubmit="handleSubmit(this)">
-          <input required placeholder="Имя" style="width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid var(--border); background: var(--card); color: var(--ink);">
-          <input required placeholder="Телефон" style="width:100%;padding:12px;margin-bottom:10px;border-radius:10px;border:1px solid var(--border); background: var(--card); color: var(--ink);">
-          <button class="btn btn-primary" style="width:100%">Отправить</button>
-        </form>
-        <p class="small" style="margin:10px 0 0">Без спама. Вернёмся с предложением в течение 1 часа.</p>
+        <p class="kicker">Напишите нам — предложим план улучшений и прогноз по лидам.</p>
+        <div style="margin-top:16px; display:flex; flex-direction:column; gap:12px">
+          <a href="mailto:hello@arental.ru" class="btn btn-primary" style="text-decoration:none;text-align:center">✉️ hello@arental.ru</a>
+          <a href="tel:+78129287478" class="btn btn-ghost" style="text-decoration:none;text-align:center">📞 +7 812 928 74 78</a>
+        </div>
+        <p class="small" style="margin:16px 0 0">Отвечаем в течение 1 часа в рабочее время.</p>
       </aside>
     </section>
 
@@ -498,7 +497,8 @@
         </div>
         
         <div style="margin-top:38px; text-align:center">
-          <a href="https://kodstudy.ru/" target="_blank" class="btn btn-primary" style="text-decoration:none">Узнать подробнее на kodstudy.ru</a>
+          <p class="lead" style="margin-bottom:16px">Хотите узнать больше о программе?</p>
+          <a href="https://kodstudy.ru/" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-block">Перейти на сайт kodstudy.ru</a>
         </div>
       </div>
     </section>
@@ -544,20 +544,16 @@
           
           <div style="margin-top:32px">
             <h4 style="margin:0 0 12px"><strong>Свяжитесь с нами:</strong></h4>
-            <p class="small" style="margin:8px 0">
-              📞 +7 911 928 7478 (все мессенджеры)<br>
-              ✉️ hello@arental.ru (почта для предложений)
+            <p class="small" style="margin:12px 0">
+              <strong>Телефон / Мессенджеры:</strong><br>
+              <a href="tel:+79119287478" style="color:var(--primary);text-decoration:none;font-size:18px;font-weight:700">📞 +7 911 928 7478</a>
             </p>
+            <p class="small" style="margin:16px 0">
+              <strong>Email для предложений:</strong><br>
+              <a href="mailto:hello@arental.ru" style="color:var(--primary);text-decoration:none;font-size:18px;font-weight:700">✉️ hello@arental.ru</a>
+            </p>
+            <p class="kicker" style="margin-top:16px">Напишите нам в любой мессенджер или на почту — расскажите о себе и желаемой позиции. Мы ответим в ближайшее время!</p>
           </div>
-          
-          <form onsubmit="handleSubmit(this)" style="margin-top:24px">
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:12px">
-              <input required placeholder="Ваше имя" style="padding:12px;border-radius:10px;border:1px solid var(--border); background: var(--card); color: var(--ink);">
-              <input required type="email" placeholder="Email" style="padding:12px;border-radius:10px;border:1px solid var(--border); background: var(--card); color: var(--ink);">
-            </div>
-            <textarea required placeholder="Расскажите о себе и желаемой позиции" style="width:100%;padding:12px;margin-top:12px;border-radius:10px;border:1px solid var(--border); background: var(--card); color: var(--ink); min-height:120px;"></textarea>
-            <button type="submit" class="btn btn-primary" style="margin-top:12px;width:100%">Отправить отклик</button>
-          </form>
         </div>
       </div>
     </section>
@@ -620,12 +616,6 @@
     // Функция для прокрутки в начало страницы
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function handleSubmit(form) {
-      event.preventDefault();
-      alert('Спасибо! Мы свяжемся в течение часа.');
-      try { form.reset(); } catch (e) { [...form.querySelectorAll('input, textarea')].forEach(i => i.value = ''); }
     }
 
     document.querySelectorAll('.theme-btn').forEach(btn => {
