@@ -1,32 +1,52 @@
 (function () {
   'use strict';
 
-  /* —— Slider —— */
-  let idx = 0;
-  const slidesEl = document.getElementById('slides');
+  /* —— Site toggle (easter egg) —— */
+  window.toggleSite = function () {
+    var slider = document.getElementById('siteSlider');
+    if (slider) {
+      slider.classList.toggle('show-alt');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
-  function show() {
-    if (slidesEl) {
-      slidesEl.style.transform = 'translateX(' + (-idx * 100) + '%)';
+  /* —— Review sliders —— */
+  var sliderState = { A: 0, B: 0 };
+  var sliderIntervals = [];
+
+  function getSlides(site) {
+    return document.getElementById('slides' + site);
+  }
+
+  function showSlide(site) {
+    var el = getSlides(site);
+    if (el) {
+      el.style.transform = 'translateX(' + (-sliderState[site] * 100) + '%)';
     }
   }
 
-  window.next = function () {
-    if (!slidesEl || !slidesEl.children.length) return;
-    idx = (idx + 1) % slidesEl.children.length;
-    show();
+  window.next = function (site) {
+    var el = getSlides(site);
+    if (!el || !el.children.length) return;
+    sliderState[site] = (sliderState[site] + 1) % el.children.length;
+    showSlide(site);
   };
 
-  window.prev = function () {
-    if (!slidesEl || !slidesEl.children.length) return;
-    idx = (idx - 1 + slidesEl.children.length) % slidesEl.children.length;
-    show();
+  window.prev = function (site) {
+    var el = getSlides(site);
+    if (!el || !el.children.length) return;
+    sliderState[site] = (sliderState[site] - 1 + el.children.length) % el.children.length;
+    showSlide(site);
   };
 
-  var sliderInterval = setInterval(window.next, 6000);
+  ['A', 'B'].forEach(function (s) {
+    if (getSlides(s)) {
+      sliderIntervals.push(setInterval(function () { window.next(s); }, 6000));
+    }
+  });
 
   window.addEventListener('beforeunload', function () {
-    clearInterval(sliderInterval);
+    sliderIntervals.forEach(function (id) { clearInterval(id); });
   });
 
   /* —— Scroll —— */
@@ -49,6 +69,10 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  window.scrollToTopB = function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   /* —— Theme —— */
   document.querySelectorAll('.theme-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -64,25 +88,33 @@
     document.body.className = savedTheme;
   }
 
-  /* —— Mobile menu —— */
-  var burger = document.getElementById('burger');
-  var mobileMenu = document.getElementById('mobileMenu');
-
-  window.toggleMobileMenu = function () {
-    if (!mobileMenu) return;
-    var isHidden = mobileMenu.style.display !== 'flex';
-    mobileMenu.style.display = isHidden ? 'flex' : 'none';
+  /* —— Mobile menus —— */
+  window.toggleMobileMenu = function (site) {
+    var menu = document.getElementById('mobileMenu' + site);
+    if (!menu) return;
+    var isHidden = menu.style.display !== 'flex';
+    menu.style.display = isHidden ? 'flex' : 'none';
   };
 
-  if (burger) {
-    burger.addEventListener('click', window.toggleMobileMenu);
-  }
+  ['A', 'B'].forEach(function (s) {
+    var burger = document.getElementById('burger' + s);
+    if (burger) {
+      burger.addEventListener('click', function () {
+        window.toggleMobileMenu(s);
+      });
+    }
+  });
 
   document.addEventListener('click', function (event) {
-    if (!mobileMenu || !burger) return;
-    if (!mobileMenu.contains(event.target) && !burger.contains(event.target)) {
-      mobileMenu.style.display = 'none';
-    }
+    ['A', 'B'].forEach(function (s) {
+      var menu = document.getElementById('mobileMenu' + s);
+      var burger = document.getElementById('burger' + s);
+      if (menu && burger) {
+        if (!menu.contains(event.target) && !burger.contains(event.target)) {
+          menu.style.display = 'none';
+        }
+      }
+    });
   });
 
 })();

@@ -221,6 +221,63 @@ main { display: block; }
   transition: transform 0.1s ease;
 }
 
+/* ── Site slider (easter egg) ── */
+.site-slider {
+  display: flex;
+  width: 200%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+.site-slider.show-alt {
+  transform: translateX(-50%);
+}
+.site {
+  width: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Site B color override ── */
+.site-b {
+  --primary: #f97316;
+  --primary-weak: #431407;
+  --ring: #ea580c;
+  --accent: #eab308;
+  --accent-weak: #422006;
+  --bg: #1c1917;
+  --card: #292524;
+  --ink: #fafaf9;
+  --muted: #a8a29e;
+  --border: rgba(255, 255, 255, 0.08);
+  --header-bg: rgba(28, 25, 23, 0.8);
+}
+.light .site-b {
+  --primary: #ea580c;
+  --primary-weak: #fff7ed;
+  --ring: #fed7aa;
+  --accent: #ca8a04;
+  --accent-weak: #fefce8;
+  --bg: #fffcf9;
+  --card: #ffffff;
+  --ink: #1c1917;
+  --muted: #78716c;
+  --border: #f5f0eb;
+  --header-bg: rgba(255, 252, 249, 0.8);
+}
+.bright .site-b {
+  --primary: #d97706;
+  --primary-weak: #fef3c7;
+  --ring: #fde68a;
+  --accent: #dc2626;
+  --accent-weak: #fee2e2;
+  --bg: #fffbeb;
+  --card: #ffffff;
+  --ink: #451a03;
+  --muted: #92400e;
+  --border: #fde68a;
+  --header-bg: rgba(255, 251, 235, 0.8);
+}
+/* ── /Site B colors ── */
+
 @media (max-width: 768px) {
   .container { padding: 0 4vw; }
   nav { display: none; }
