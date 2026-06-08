@@ -4,11 +4,21 @@
   /* —— Review slider —— */
   var idx = 0;
   var slidesEl = document.getElementById('slides');
+  var dotsEl = document.getElementById('sliderDots');
+
+  function updateDots() {
+    if (!dotsEl) return;
+    var dots = dotsEl.querySelectorAll('.slider-dot');
+    dots.forEach(function (d, i) {
+      d.classList.toggle('active', i === idx);
+    });
+  }
 
   function show() {
     if (slidesEl) {
       slidesEl.style.transform = 'translateX(' + (-idx * 100) + '%)';
     }
+    updateDots();
   }
 
   window.next = function () {
@@ -23,10 +33,22 @@
     show();
   };
 
+  window.goToSlide = function (i) {
+    if (!slidesEl || !slidesEl.children.length) return;
+    idx = i;
+    show();
+  };
+
   var sliderInterval = setInterval(window.next, 6000);
   window.addEventListener('beforeunload', function () {
     clearInterval(sliderInterval);
   });
+
+  if (dotsEl) {
+    dotsEl.querySelectorAll('.slider-dot').forEach(function (dot, i) {
+      dot.addEventListener('click', function () { window.goToSlide(i); });
+    });
+  }
 
   /* —— Smooth scroll —— */
   window.scrollToBlock = function (sel) {
@@ -73,8 +95,19 @@
 
   window.toggleMobileMenu = function () {
     if (!mobileMenu) return;
-    var isHidden = mobileMenu.style.display !== 'flex';
-    mobileMenu.style.display = isHidden ? 'flex' : 'none';
+    var isOpen = mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open');
+    if (!isOpen) {
+      mobileMenu.style.display = 'flex';
+      requestAnimationFrame(function () {
+        mobileMenu.classList.add('open');
+      });
+    } else {
+      mobileMenu.classList.remove('open');
+      setTimeout(function () {
+        mobileMenu.style.display = 'none';
+      }, 300);
+    }
   };
 
   if (burger) {
@@ -83,8 +116,11 @@
 
   document.addEventListener('click', function (event) {
     if (!mobileMenu || !burger) return;
-    if (!mobileMenu.contains(event.target) && !burger.contains(event.target)) {
-      mobileMenu.style.display = 'none';
+    if (!mobileMenu.contains(event.target) && !burger.contains(event.target) && mobileMenu.classList.contains('open')) {
+      mobileMenu.classList.remove('open');
+      setTimeout(function () {
+        mobileMenu.style.display = 'none';
+      }, 300);
     }
   });
 
