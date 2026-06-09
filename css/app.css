@@ -312,6 +312,25 @@ h1, h2, h3, h4 { margin: 0; font-weight: var(--font-heading, 600); line-height: 
 }
 .pressable-image:active { transform: scale(.97); }
 
+/* ── Partner logo ── */
+.partner-logo {
+  max-height: 110px;
+  width: auto;
+  opacity: .55;
+  transition: opacity .3s, filter .4s;
+  filter: brightness(1.8) contrast(.9);
+}
+.partner-logo:hover { opacity: 1; }
+.light .partner-logo {
+  filter: invert(1) brightness(.7);
+  opacity: .5;
+}
+.light .partner-logo:hover { opacity: .8; }
+.bright .partner-logo {
+  filter: brightness(2.5) contrast(.85);
+  opacity: .55;
+}
+
 /* ── Burger / Mobile menu ── */
 .burger {
   display: none;
